@@ -18,15 +18,16 @@ public class ReplPluginTest {
 
     @Test
     public void flattenFiles() throws IOException {
-        repl.setSrcDir("target/test-classes");
+        String buildDir = System.getProperty("workDir");
+        repl.setSrcDir(buildDir+"/target/test-classes");
         repl.execute();
 
-        File file1 = new File("src/test/resources/.flattened-pom.xml");
-        File file2 = new File("target/test-classes/pom.xml");
+        File file1 = new File(buildDir+"/src/test/resources/.flattened-pom.xml");
+        File file2 = new File(buildDir+"/target/test-classes/pom.xml");
         Assert.assertTrue(FileUtils.contentEquals(file1, file2));
 
-        File file3 = new File("src/test/resources/hierarchical/.flattened-pom.xml");
-        File file4 = new File("target/test-classes/hierarchical/pom.xml");
+        File file3 = new File(buildDir+"/src/test/resources/hierarchical/.flattened-pom.xml");
+        File file4 = new File(buildDir+"/target/test-classes/hierarchical/pom.xml");
         Assert.assertTrue(FileUtils.contentEquals(file3, file4));
     }
 
