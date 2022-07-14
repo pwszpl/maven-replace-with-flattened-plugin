@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd" xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+  <modelVersion>4.0.0</modelVersion>
+  <parent>
+    <groupId>pl.ufg</groupId>
+    <artifactId>deployment-plan</artifactId>
+    <version>1.0.1</version>
+  </parent>
+  <groupId>pl.ufg.app.sas</groupId>
+  <artifactId>common</artifactId>
+  <version>1.2-SNAPSHOT</version>
+  <packaging>pom</packaging>
+  <modules>
+    <module>sbar-sas-common</module>
+  </modules>
+  <properties>
+    <depl.osb.username>${oracle.osb.oud.user}</depl.osb.username>
+    <revision>1.0-SNAPSHOT</revision>
+    <depl.osb.password>${oracle.osb.oud.password}</depl.osb.password>
+    <depl.osb.host>${oracle.osb.oud.adminurl}</depl.osb.host>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+  </properties>
+</project>

@@ -1,0 +1,13 @@
+# This workflow will build a package using Maven, publish it not GitHub packages and then publish it to Maven Central Repository.
+
+name: Build package and push to Maven Central
+
+on:
+  push:
+    tags:
+      - '*'
+
+jobs:
+  build:
+    uses: pwszpl/mongodb-search-query-translator/.github/workflows/maven-publish-action.yml@main
+    secrets: inherit
