@@ -1,9 +1,12 @@
 package pl.pawszy;
 
 import org.apache.maven.plugin.AbstractMojo;
+import org.apache.maven.plugin.logging.Log;
+import org.apache.maven.plugin.logging.SystemStreamLog;
 import org.apache.maven.plugins.annotations.LifecyclePhase;
 import org.apache.maven.plugins.annotations.Mojo;
 import org.apache.maven.plugins.annotations.Parameter;
+import org.apache.maven.monitor.logging.*;
 
 import java.io.File;
 import java.io.IOException;
@@ -13,17 +16,18 @@ import java.nio.file.Paths;
 
 @Mojo(name="repl2flatten", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class ReplPlugin extends AbstractMojo {
-    @Parameter(defaultValue="./")
+    private SystemStreamLog log = new SystemStreamLog();
+    @Parameter(defaultValue=".")
     private String srcDir;
 
     @Override
     public void execute(){
         try {
             Files.walk(Paths.get(srcDir))
-                    .filter(e -> { return e.toFile().getName().equals("pom.xml"); })
+                    .filter(e -> e.toFile().getName().equals("pom.xml"))
                     .forEach(e -> { replaceWithFlatten(e);} );
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -33,6 +37,8 @@ public class ReplPlugin extends AbstractMojo {
         if(flattenedPom.exists()){
                 e.toFile().delete();
                 flattenedPom.renameTo(e.toFile());
+        } else {
+            log.info("Couldn't find flattened for pom: "+e);
         }
     }
 
