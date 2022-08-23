@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Mojo(name="repl2flatten", defaultPhase = LifecyclePhase.GENERATE_SOURCES)
 public class ReplPlugin extends AbstractMojo {
@@ -23,9 +25,8 @@ public class ReplPlugin extends AbstractMojo {
     @Override
     public void execute(){
         try {
-            Files.walk(Paths.get(srcDir))
-                    .filter(e -> e.toFile().getName().equals("pom.xml"))
-                    .forEach(e -> { replaceWithFlatten(e);} );
+            List<Path> poms = Files.walk(Paths.get(srcDir)).filter(e -> e.toFile().getName().equals("pom.xml")).collect(Collectors.toList());
+            poms.forEach(e -> { replaceWithFlatten(e);} );
         } catch (IOException e) {
             log.error(e);
         }
